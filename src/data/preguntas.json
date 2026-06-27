@@ -1,0 +1,72 @@
+[
+  {
+    "id": 1,
+    "curso": "Aritmética",
+    "enunciado": "Si el conjunto A = {a + b, 12, 2a - b} es un conjunto unitario, determine el valor de a × b.",
+    "opciones": {
+      "A": "24",
+      "B": "30",
+      "C": "32",
+      "D": "36",
+      "E": "40"
+    },
+    "respuestaCorrecta": "C",
+    "area": "A"
+  },
+  {
+    "id": 2,
+    "curso": "Biología",
+    "enunciado": "¿Cuál de las siguientes biomoléculas es la encargada de almacenar y transmitir la información genética en las células de los seres vivos?",
+    "opciones": {
+      "A": "Proteínas",
+      "B": "Lípidos",
+      "C": "Ácido desoxirribonucleico (ADN)",
+      "D": "Glúcidos",
+      "E": "Ácido ribonucleico (ARN)"
+    },
+    "respuestaCorrecta": "C",
+    "area": "D"
+  },
+  {
+    "id": 3,
+    "curso": "Química / Ecología",
+    "enunciado": "En el proceso de fotosíntesis realizado por las plantas terrestres, ¿cuál es el gas absorbido de la atmósfera para sintetizar glucosa?",
+    "opciones": {
+      "A": "Oxígeno (O2)",
+      "B": "Monóxido de carbono (CO)",
+      "C": "Dióxido de carbono (CO2)",
+      "D": "Nitrógeno (N2)",
+      "E": "Metano (CH4)"
+    },
+    "respuestaCorrecta": "C",
+    "area": "E"
+  },
+  {
+    "id": 4,
+    "curso": "Economía",
+    "enunciado": "A la fase del proceso económico que consiste en el traslado de los bienes y servicios producidos desde las unidades de producción (empresas) hacia las unidades de consumo (familias) se le denomina:",
+    "opciones": {
+      "A": "Producción",
+      "B": "Circulación",
+      "C": "Distribución",
+      "D": "Consumo",
+      "E": "Inversión"
+    },
+    "respuestaCorrecta": "B",
+    "area": "C"
+  },
+  {
+    "id": 5,
+    "curso": "Lenguaje y Literatura",
+    "enunciado": "Identifique la alternativa que presenta una oración compuesta por subordinación sustantiva.",
+    "opciones": {
+      "A": "Él trabaja en Huaraz y ella estudia en Caraz.",
+      "B": "El libro que me prestaste es muy interesante.",
+      "C": "Quien persevere en sus estudios logrará ingresar a la UNASAM.",
+      "D": "Llegamos tarde porque el tráfico estuvo pesado.",
+      "E": "Si estudias a conciencia, aprobarás el examen."
+    },
+    "respuestaCorrecta": "C",
+    "area": "B"
+  }
+]
