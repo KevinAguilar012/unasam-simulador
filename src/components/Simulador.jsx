@@ -1,22 +1,43 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import PREGUNTAS_80 from '../data/preguntas80'
 import Examen from './Examen'
 import { calcularPuntaje } from '../utils/calcularPuntaje'
+import { guardarResultado } from '../utils/estadisticas'
 import Resultados from './Resultados'
 
-function Simulador({ selectedArea, onBack }) {
+function Simulador({ selectedArea, user, onBack }) {
   const [answers, setAnswers] = useState({}); // { questionId: selectedKey }
   const [isFinished, setIsFinished] = useState(false);
   const [timeLeft, setTimeLeft] = useState(10800); // 3 horas en segundos
   const [isDarkMode, setIsDarkMode] = useState(true);
+  const savedRef = useRef(false);
 
   // We always use the 80-question set for a full exam simulation
   const filteredQuestions = PREGUNTAS_80;
+
+  const results = calcularPuntaje(answers, filteredQuestions);
+  const timeUsed = 10800 - timeLeft;
+
+  useEffect(() => {
+    if (isFinished && user?.correo && !savedRef.current) {
+      savedRef.current = true;
+      guardarResultado(user.correo, {
+        area: selectedArea,
+        score: results.score,
+        correct: results.correct,
+        incorrect: results.incorrect,
+        omitted: results.omitted,
+        total: results.total,
+        timeUsed,
+      });
+    }
+  }, [isFinished, user, selectedArea, results, timeUsed]);
 
   const restartExam = () => {
     setAnswers({});
     setTimeLeft(10800);
     setIsFinished(false);
+    savedRef.current = false;
   };
 
   const formatTime = (seconds) => {
@@ -25,9 +46,6 @@ function Simulador({ selectedArea, onBack }) {
     const s = seconds % 60;
     return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
   };
-
-  const results = calcularPuntaje(answers, filteredQuestions);
-  const timeUsed = 10800 - timeLeft;
 
   const getAreaLabel = (areaId) => {
     const labels = {
