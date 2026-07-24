@@ -47,18 +47,6 @@ function Simulador({ selectedArea, user, onBack }) {
     return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
   };
 
-  const getAreaLabel = (areaId) => {
-    const labels = {
-      'all': 'General',
-      'A': 'Área A (Ingenierías)',
-      'B': 'Área B (Sociales y Derecho)',
-      'C': 'Área C (Económicas)',
-      'D': 'Área D (Salud)',
-      'E': 'Área E (Ciencias)'
-    };
-    return labels[areaId] || areaId;
-  };
-
   return (
     <div className={`min-h-screen transition-colors duration-300 font-sans ${isDarkMode ? 'bg-[#0f172a] text-slate-100' : 'bg-slate-50 text-slate-800'}`}>
       

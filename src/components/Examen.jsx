@@ -6,30 +6,25 @@ function Examen({ selectedArea, onFinish, onBack, isDarkMode }) {
   const [answers, setAnswers] = useState({}); // { [questionId]: 'A'/'B'/etc }
   const [timeLeft, setTimeLeft] = useState(10800); // 3 hours (10800 seconds)
   const [showConfirmModal, setShowConfirmModal] = useState(false);
-  const [isTimeUp, setIsTimeUp] = useState(false);
 
   // Get the 80 questions directly
   const questions = PREGUNTAS_80;
 
-  // Real-time Countdown Timer
+  // Real-time Countdown Timer with single interval
   useEffect(() => {
-    if (timeLeft <= 0) {
-      setIsTimeUp(true);
-      // Auto-submit when time reaches zero
-      handleAutoSubmit();
-      return;
-    }
-
     const timer = setInterval(() => {
-      setTimeLeft((prev) => prev - 1);
+      setTimeLeft((prev) => {
+        if (prev <= 1) {
+          clearInterval(timer);
+          onFinish(answers, 0);
+          return 0;
+        }
+        return prev - 1;
+      });
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [timeLeft]);
-
-  const handleAutoSubmit = () => {
-    onFinish(answers, 0); // time remaining is 0
-  };
+  }, [answers, onFinish]);
 
   const handleSelectOption = (questionId, optionKey) => {
     setAnswers((prev) => ({

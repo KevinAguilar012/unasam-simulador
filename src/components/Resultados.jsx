@@ -24,7 +24,6 @@ function Resultados({
   };
 
   const maxScore = results.total * 4.0;
-  const scorePercent = (results.score / maxScore) * 100;
   
   // Decide feedback message based on score (e.g. threshold of 50% of max score)
   const isCompetitive = results.score >= (maxScore * 0.5);

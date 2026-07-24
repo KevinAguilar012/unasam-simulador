@@ -26,11 +26,11 @@ function App() {
     if (session) {
       try {
         setUser(JSON.parse(session));
+        setIsAuthenticated(true);
+        setAuthModalVisible(false);
       } catch {
         setUser(null);
       }
-      setIsAuthenticated(true);
-      setAuthModalVisible(false);
     }
   }, []);
 
@@ -53,10 +53,6 @@ function App() {
     setExamStarted(false);
     setSelectedArea(null);
     setActivePanel(null);
-  };
-
-  const handleChangeAccount = () => {
-    handleLogout();
   };
 
   const handleStartExam = (area) => {
@@ -92,7 +88,7 @@ function App() {
           selectedArea={selectedArea}
           onGoHome={handleBackToDashboard}
           onLogout={handleLogout}
-          onChangeAccount={handleChangeAccount}
+          onChangeAccount={handleLogout}
           onOpenPanel={setActivePanel}
         />
       )}

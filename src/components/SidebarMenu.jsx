@@ -1,5 +1,4 @@
-import { useEffect, useRef } from 'react'
-import { bindSidebarMenu } from '../sidebarMenu'
+import { useState, useEffect } from 'react'
 import { obtenerEstadisticas } from '../utils/estadisticas'
 import '../SidebarMenu.css'
 
@@ -26,28 +25,42 @@ function SidebarMenu({
   onChangeAccount,
   onOpenPanel,
 }) {
-  const containerRef = useRef(null)
-  const apiRef = useRef(null)
+  const [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
-    apiRef.current = bindSidebarMenu(containerRef.current)
-    return () => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setIsOpen(false)
+      }
+    }
+
+    if (isOpen) {
+      document.body.classList.add('sidebar-open')
+      window.addEventListener('keydown', handleKeyDown)
+    } else {
       document.body.classList.remove('sidebar-open')
     }
-  }, [])
+
+    return () => {
+      document.body.classList.remove('sidebar-open')
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [isOpen])
+
+  const closeMenu = () => setIsOpen(false)
 
   const handleAction = (callback) => {
-    apiRef.current?.closeMenu()
+    closeMenu()
     callback?.()
   }
 
   const handlePanel = (panel) => {
-    apiRef.current?.closeMenu()
+    closeMenu()
     onOpenPanel(panel)
   }
 
   const openExternal = (url) => {
-    apiRef.current?.closeMenu()
+    closeMenu()
     window.open(url, '_blank', 'noopener,noreferrer')
   }
 
@@ -56,23 +69,29 @@ function SidebarMenu({
   const { resumen } = obtenerEstadisticas(user?.correo)
 
   return (
-    <div ref={containerRef} className="sidebar-root">
+    <div className="sidebar-root">
       <button
         type="button"
         className="sidebar-hamburger-btn"
-        aria-label="Abrir menú"
+        aria-label={isOpen ? "Cerrar menú" : "Abrir menú"}
+        aria-expanded={isOpen}
+        onClick={() => setIsOpen((prev) => !prev)}
       >
         <span className="sidebar-hamburger-line" />
         <span className="sidebar-hamburger-line" />
         <span className="sidebar-hamburger-line" />
       </button>
 
-      <div className="sidebar-overlay" aria-hidden="true" />
+      <div
+        className={`sidebar-overlay ${isOpen ? 'is-active' : ''}`}
+        onClick={closeMenu}
+        aria-hidden="true"
+      />
 
-      <aside className="sidebar-menu" aria-label="Menú de navegación">
+      <aside className={`sidebar-menu ${isOpen ? 'is-active' : ''}`} aria-label="Menú de navegación">
         <div className="sidebar-menu-header">
           <h2 className="sidebar-menu-title">Menú</h2>
-          <button type="button" className="sidebar-close-btn" aria-label="Cerrar menú">
+          <button type="button" className="sidebar-close-btn" onClick={closeMenu} aria-label="Cerrar menú">
             ×
           </button>
         </div>
